@@ -92,7 +92,7 @@ function saveEmpresa(req, res) {
                         user.save((err, empresaSaved) => {
                             if (err) {
                                 return res.status(500).send({ message: 'Error general al guardar' });
-                            } else if (userSaved) {
+                            } else if (empresaSaved) {
                                 return res.send({ message: 'Empresa guardada', empresaSaved })
                             } else {
                                 return res.send(500).send({ message: 'No se guardó la empresa' })
