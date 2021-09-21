@@ -40,7 +40,6 @@ function createInit(req, res) {
 function login(req, res) {
     var params = req.body;
 
-<<<<<<< HEAD
     if(params.username && params.password){
         User.findOne({username: params.username}, (err, userFind)=>{
             if(err){
@@ -53,24 +52,6 @@ function login(req, res) {
                         return res.send({message: 'Usuario logeado', token: jwt.createToken(userFind), user: userFind })
                     }else{
                         return res.status(404).send({message: 'Contraseña incorrecta'});
-=======
-    if (params.username && params.password) {
-        User.findOne({ username: params.username }, (err, userFind) => {
-            if (err) {
-                return res.status(500).send({ message: 'Error general' });
-            } else if (userFind) {
-                bcrypt.compare(params.password, userFind.password, (err, checkPassword) => {
-                    if (err) {
-                        return res.status(500).send({ message: 'Error general en la verificación de la contraseña' });
-                    } else if (checkPassword) {
-                        if (params.gettoken) {
-                            return res.send({ token: jwt.createToken(userFind), user: userFind });
-                        } else {
-                            return res.send({ message: 'Usuario logeado', token: jwt.createToken(userFind), user: userFind })
-                        }
-                    } else {
-                        return res.status(404).send({ message: 'Contraseña incorrecta' });
->>>>>>> master
                     }
                 })
             } else {
