@@ -49,11 +49,7 @@ function login(req, res){
                     if(err){
                         return res.status(500).send({message: 'Error general en la verificación de la contraseña'});
                     }else if(checkPassword){
-                        if(params.gettoken){
-                            return res.send({ token: jwt.createToken(userFind), user: userFind});
-                        }else{
-                            return res.send({message: 'Usuario logeado', token: jwt.createToken(userFind), user: userFind })
-                        }
+                        return res.send({message: 'Usuario logeado', token: jwt.createToken(userFind), user: userFind })
                     }else{
                         return res.status(404).send({message: 'Contraseña incorrecta'});
                     }
