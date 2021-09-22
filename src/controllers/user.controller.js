@@ -4,7 +4,6 @@ var User = require('../models/user')
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../services/jwt');
-//var Empleado = require('./models/empleado');
 
 function createInit(req, res) {
     let user = new User();
