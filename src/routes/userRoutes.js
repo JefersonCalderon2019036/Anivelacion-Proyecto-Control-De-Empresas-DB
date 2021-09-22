@@ -10,6 +10,6 @@ api.post('/login', userController.login);
 api.get('/getEmpresas', mdAuth.ensureAuth, userController.getEmpresas);
 api.post('/saveEmpresa', mdAuth.ensureAuth ,userController.saveEmpresa);
 api.put('/updateEmpresa/:id',mdAuth.ensureAuth, userController.updateEmpresa);
-api.delete('/removeEmpresa/:id',mdAuth.ensureAuth, userController.removeEmpresa);
+api.put('/removeEmpresa/:id',mdAuth.ensureAuth, userController.removeEmpresa);
 
 module.exports = api;
