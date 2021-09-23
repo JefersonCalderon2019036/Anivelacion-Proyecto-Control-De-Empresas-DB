@@ -54,7 +54,7 @@ function login(req, res) {
                     }
                 })
             } else {
-                return res.send({ message: 'usuario no encontrado' })
+                return res.status(404).send({ message: 'usuario no encontrado' })
             }
         })
     } else {
