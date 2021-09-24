@@ -41,7 +41,7 @@ function setProducto(req, res) {
     }
 }
 
-/*function simuVenta(req, res) {
+function simuVenta(req, res) {
     var userId = req.user.sub;
     var productoId = req.params.IdP;
     var params = req.body;
@@ -49,43 +49,83 @@ function setProducto(req, res) {
     if (userId != req.user.sub) {
         return res.status(500).send({ message: 'No tienes permiso para realizar esta acción' })
     } else {
-        Producto.find( productoId, (err, productoFind) => {
+        Producto.findOne( productoId, (err, productoFind) => {
             if (err) {
                 return res.status(500).send({ message: 'Error general'})
             }else if (productoFind.stock < params.cant){
-                console.log(productoFind);
                 return res.send({ message: 'No hay producto en el stock mayor a lo que quieres descontar' })
             }else{
-                Producto.findByIdAndUpdate(productoId, { $inc: { cantVendida: params.cant } }, { new: true }, (err, aumento) => {
+                Producto.findByIdAndUpdate(productoFind, { $inc: { cantVendida: params.cant } }, { new: true }, (err, aumento) => {
                 })
-                Producto.findByIdAndUpdate(productoId, { $inc: { stock: -params.cant } }, { new: true }, (err, aumento) => {
+                Producto.findByIdAndUpdate(productoFind, { $inc: { stock: -params.cant } }, { new: true }, (err, aumento) => {
                 })
+                return res.status(200).send({message: 'Compra hecha con exito'})
             }
         })
-        
     }
-}*/
+}
 
 function listProductos(req, res) {
     var userId = req.user.sub;
 
-    Producto.find({empresa: userId}, (err, productos) => {
+    Producto.find({ empresa: userId }, (err, productos) => {
         if (err) {
-            return res.status(500).send({ message: 'Error general'})
-        }else if (productos){
-            return res.status(200).send({ message: 'Productos Encontrados: ', productos: productos})
-        }else{
-            return res.status(500).send({ message: 'no se encontraron productos'})
+            return res.status(500).send({ message: 'Error general' })
+        } else if (productos) {
+            return res.status(200).send({ message: 'Productos Encontrados: ', productos: productos })
+        } else {
+            return res.status(500).send({ message: 'no se encontraron productos' })
         }
     })
 }
 
-function searchProductos(req, res) {
+function searchP(req, res) {
+    var params = req.body;
 
+    if (params.search) {
+        Producto.find({
+            $or: [{ name: params.search },
+            { proveedor: params.search }]
+        }, (err, resultSearch) => {
+            if (err) {
+                console.log(resultSearch);
+                return res.status(500).send({ message: 'Error general' });
+            } else if (resultSearch) {
+                return res.send({ message: 'Coincidencias encontradas: ', resultSearch });
+            } else {
+                return res.status(403).send({ message: 'Búsqueda sin coincidencias' });
+            }
+        })
+    } else {
+        return res.status(403).sebd({ message: 'Ingresa datos en el campo de búsqueda' });
+    }
+}
+
+function searchPS(req, res) {
+    var params = req.body;
+
+    if (params.search) {
+        Producto.find({
+            $or: [{ stock: params.search }]
+        }, (err, resultSearch) => {
+            if (err) {
+                console.log(resultSearch);
+                return res.status(500).send({ message: 'Error general' });
+            } else if (resultSearch) {
+                return res.send({ message: 'Coincidencias encontradas: ', resultSearch });
+            } else {
+                return res.status(403).send({ message: 'Búsqueda sin coincidencias' });
+            }
+        })
+    } else {
+        return res.status(403).sebd({ message: 'Ingresa datos en el campo de búsqueda' });
+    }
 }
 
 module.exports = {
     setProducto,
-    listProductos
-    //simuVenta
+    listProductos,
+    searchP,
+    searchPS,
+    simuVenta
 }

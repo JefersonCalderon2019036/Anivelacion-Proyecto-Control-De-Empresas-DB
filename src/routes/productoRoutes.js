@@ -8,7 +8,9 @@ var api = express.Router();
 
 api.post('/setProducto', mdAuth.ensureAuth ,productoController.setProducto);
 api.get('/listProductos', mdAuth.ensureAuth, productoController.listProductos);
-//api.put('/simuVenta/:idP', mdAuth.ensureAuth ,productoController.simuVenta);
+api.put('/simuVenta/:idP', mdAuth.ensureAuth ,productoController.simuVenta);
+api.post('/searchP', mdAuth.ensureAuth ,productoController.searchP);
+api.post('/searchPS', mdAuth.ensureAuth ,productoController.searchPS);
 
 
 module.exports = api;
