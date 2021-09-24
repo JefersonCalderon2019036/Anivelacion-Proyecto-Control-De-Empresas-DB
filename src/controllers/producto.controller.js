@@ -67,16 +67,55 @@ function simuVenta(req, res) {
 
 function listProductos(req, res) {
     var userId = req.user.sub;
+    var params = req.body;
 
-    Producto.find({ empresa: userId }, (err, productos) => {
-        if (err) {
-            return res.status(500).send({ message: 'Error general' })
-        } else if (productos) {
-            return res.status(200).send({ message: 'Productos Encontrados: ', productos: productos })
-        } else {
-            return res.status(500).send({ message: 'no se encontraron productos' })
-        }
-    })
+    if(params.orden == "SotckAsc"){
+        Producto.find({ empresa: userId }, (err, productos) => {
+            if (err) {
+                return res.status(500).send({ message: 'Error general' })
+            } else if (productos) {
+                return res.status(200).send({ message: 'Productos Encontrados: ', productos: productos })
+            } else {
+                return res.status(500).send({ message: 'no se encontraron productos' })
+            }
+        }).sort({stock:1});
+    }
+
+    if(params.orden == "SotckDesc"){
+        Producto.find({ empresa: userId }, (err, productos) => {
+            if (err) {
+                return res.status(500).send({ message: 'Error general' })
+            } else if (productos) {
+                return res.status(200).send({ message: 'Productos Encontrados: ', productos: productos })
+            } else {
+                return res.status(500).send({ message: 'no se encontraron productos' })
+            }
+        }).sort({stock:-1});
+    }
+    
+    if(params.orden == "CanVenDesc"){
+        Producto.find({ empresa: userId }, (err, productos) => {
+            if (err) {
+                return res.status(500).send({ message: 'Error general' })
+            } else if (productos) {
+                return res.status(200).send({ message: 'Productos Encontrados: ', productos: productos })
+            } else {
+                return res.status(500).send({ message: 'no se encontraron productos' })
+            }
+        }).sort({cantVendida:-1});
+    }
+
+    if(params.orden == "CanVenAsc"){
+        Producto.find({ empresa: userId }, (err, productos) => {
+            if (err) {
+                return res.status(500).send({ message: 'Error general' })
+            } else if (productos) {
+                return res.status(200).send({ message: 'Productos Encontrados: ', productos: productos })
+            } else {
+                return res.status(500).send({ message: 'no se encontraron productos' })
+            }
+        }).sort({cantVendida:1});
+    }
 }
 
 function searchP(req, res) {
@@ -104,9 +143,9 @@ function searchP(req, res) {
 function searchPS(req, res) {
     var params = req.body;
 
-    if (params.search) {
+    if (params.search2) {
         Producto.find({
-            $or: [{ stock: params.search }]
+            $or: [{ stock: params.search2 }]
         }, (err, resultSearch) => {
             if (err) {
                 console.log(resultSearch);
