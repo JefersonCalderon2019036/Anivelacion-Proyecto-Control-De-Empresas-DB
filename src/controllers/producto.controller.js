@@ -53,6 +53,7 @@ function simuVenta(req, res) {
             if (err) {
                 return res.status(500).send({ message: 'Error general'})
             }else if (productoFind.stock < params.cant){
+                console.log(productoFind.stock);
                 console.log(params.cant)
                 return res.send({ message: 'No hay producto en el stock mayor a lo que quieres descontar' })
             }else{
@@ -122,7 +123,7 @@ function listProductos(req, res) {
 function searchP(req, res) {
     var params = req.body;
 
-    if (params.search) {
+    if (!params.search) {
         Producto.find({
             $or: [{ name: params.search },
             { proveedor: params.search }]
@@ -147,7 +148,7 @@ function searchP(req, res) {
 function searchPS(req, res) {
     var params = req.body;
 
-    if (params.search2) {
+    if (!params.search2) {
         Producto.find({
             $or: [{ stock: params.search2 }]
         }, (err, resultSearch) => {
