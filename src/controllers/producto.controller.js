@@ -53,6 +53,7 @@ function simuVenta(req, res) {
             if (err) {
                 return res.status(500).send({ message: 'Error general'})
             }else if (productoFind.stock < params.cant){
+                console.log(params.cant)
                 return res.send({ message: 'No hay producto en el stock mayor a lo que quieres descontar' })
             }else{
                 Producto.findByIdAndUpdate(productoFind, { $inc: { cantVendida: params.cant } }, { new: true }, (err, aumento) => {
