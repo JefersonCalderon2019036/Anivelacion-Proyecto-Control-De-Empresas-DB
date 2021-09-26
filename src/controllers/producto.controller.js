@@ -157,7 +157,7 @@ function searchPS(req, res) {
             }
         })
     } else {
-        return res.status(403).sebd({ message: 'Ingresa datos en el campo de búsqueda' });
+        return res.status(403).send({ message: 'Ingresa datos en el campo de búsqueda' });
     }
 }
 
