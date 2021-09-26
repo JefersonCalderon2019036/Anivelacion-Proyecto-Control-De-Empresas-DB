@@ -123,7 +123,7 @@ function listProductos(req, res) {
 function searchP(req, res) {
     var params = req.body;
 
-    if (!params.search) {
+    if (params.search) {
         Producto.find({
             $or: [{ name: params.search },
             { proveedor: params.search }]
@@ -148,7 +148,7 @@ function searchP(req, res) {
 function searchPS(req, res) {
     var params = req.body;
 
-    if (!params.search2) {
+    if (params.search2) {
         Producto.find({
             $or: [{ stock: params.search2 }]
         }, (err, resultSearch) => {
