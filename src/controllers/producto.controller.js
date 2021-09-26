@@ -130,12 +130,15 @@ function searchP(req, res) {
                 console.log(resultSearch);
                 return res.status(500).send({ message: 'Error general' });
             } else if (resultSearch) {
+                console.log(resultSearch);
                 return res.send({ message: 'Coincidencias encontradas: ', resultSearch });
             } else {
+                console.log(resultSearch);
                 return res.status(403).send({ message: 'Búsqueda sin coincidencias' });
             }
         })
     } else {
+        console.log(params.search);
         return res.status(403).send({ message: 'Ingresa datos en el campo de búsqueda' });
     }
 }
@@ -151,12 +154,15 @@ function searchPS(req, res) {
                 console.log(resultSearch);
                 return res.status(500).send({ message: 'Error general' });
             } else if (resultSearch) {
+                console.log(resultSearch);
                 return res.send({ message: 'Coincidencias encontradas: ', resultSearch });
             } else {
+                console.log(resultSearch);
                 return res.status(403).send({ message: 'Búsqueda sin coincidencias' });
             }
         })
     } else {
+        console.log(params.search);
         return res.status(403).send({ message: 'Ingresa datos en el campo de búsqueda' });
     }
 }
